@@ -2,7 +2,7 @@
 
 ## About Relief
 
-Relief is an application design to coordinate help during the
+Relief is an application developed to coordinate help during the
 [COVID-19](https://en.wikipedia.org/wiki/Coronavirus_disease_2019) pandemic.
 
 ## Contributing
