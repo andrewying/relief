@@ -1,5 +1,4 @@
-<?php
-/**
+/*
  * Relief, developed to coordinate help during the COVID-19 pandemic.
  * Copyright (c) 2020 Andrew Ying
  *
@@ -16,19 +15,6 @@
  * this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace Relief\Http\Controllers;
-
-use Illuminate\Http\Request;
-
-class HomeController extends Controller
-{
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
-    {
-        return view('home');
-    }
-}
+export const LOGIN_STATUS_FRESH = 0;
+export const LOGIN_STATUS_IN_PROGRESS = 1;
+export const LOGIN_STATUS_ERROR = -1;
