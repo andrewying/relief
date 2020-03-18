@@ -18,3 +18,7 @@
 export const LOGIN_STATUS_FRESH = 0;
 export const LOGIN_STATUS_IN_PROGRESS = 1;
 export const LOGIN_STATUS_ERROR = -1;
+
+export const REGISTER_STATUS_FRESH = 0;
+export const REGISTER_STATUS_IN_PROGRESS = 1;
+export const REGISTER_STATUS_ERROR = -1;

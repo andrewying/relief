@@ -15,12 +15,22 @@
  * this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { LOGIN_STATUS_ERROR, LOGIN_STATUS_FRESH, LOGIN_STATUS_IN_PROGRESS } from './constants';
-import { RECEIVE_LOGIN_RESPONSE, REQUEST_LOGIN_RESPONSE } from './actions';
+import {
+    LOGIN_STATUS_ERROR,
+    LOGIN_STATUS_FRESH,
+    LOGIN_STATUS_IN_PROGRESS,
+    REGISTER_STATUS_FRESH, REGISTER_STATUS_IN_PROGRESS
+} from './constants';
+import {
+    RECEIVE_LOGIN_RESPONSE,
+    REQUEST_LOGIN_RESPONSE,
+    REQUEST_REGISTER_RESPONSE
+} from './actions';
 
 const DEFAULT = {
     loggedIn: false,
     loginStatus: LOGIN_STATUS_FRESH,
+    registerStatus: REGISTER_STATUS_FRESH,
     user: {},
     errors: []
 };
@@ -45,6 +55,10 @@ export default function Store(state = DEFAULT, action) {
                     errors: action.response
                 })
             }
+        case REQUEST_REGISTER_RESPONSE:
+            return Object.assign({}, state, {
+                registerStatus: REGISTER_STATUS_IN_PROGRESS
+            });
         default:
             return state;
     }

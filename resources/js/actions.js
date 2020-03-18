@@ -51,3 +51,40 @@ export function login(data) {
             });
     }
 }
+
+export const REQUEST_REGISTER_RESPONSE = 'REQUEST_REGISTER_RESPONSE';
+
+function requestRegisterResponse() {
+    return {
+        type: REQUEST_REGISTER_RESPONSE
+    }
+}
+
+export const RECEIVE_REGISTER_RESPONSE = 'RECEIVE_REGISTER_RESPONSE';
+
+function receiveRegisterResponse(success, response) {
+    return {
+        type: RECEIVE_REGISTER_RESPONSE,
+        success: success,
+        response: response
+    }
+}
+
+export function register(data) {
+    return dispatch => {
+        dispatch(requestRegisterResponse());
+
+        axios.get('/airlock/csrf-cookie')
+            .then(() => {
+                axios.post('/api/register', data)
+                    .then(response => {
+                        dispatch(receiveRegisterResponse(true, {
+                            user: response.data.user
+                        }));
+                    })
+                    .catch(error => {
+                        dispatch(receiveRegisterResponse(false, error.data.errors));
+                    });
+            });
+    }
+}

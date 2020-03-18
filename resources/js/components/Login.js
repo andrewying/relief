@@ -17,12 +17,13 @@
 
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import { LOGIN_STATUS_ERROR, LOGIN_STATUS_IN_PROGRESS } from '../constants';
 import { login } from '../actions';
+import Input from '../partials/Input';
 
 function Login(props) {
-    const { loggedIn, loginStatus, errors, login } = props;
+    const { loggedIn, loginStatus, errors, login, history } = props;
 
     const [ email, setEmail ] = useState('');
     const [ password, setPassword ] = useState('');
@@ -30,6 +31,10 @@ function Login(props) {
 
     const doLogin = () => {
         login(email, password, remember);
+    };
+
+    const back = () => {
+        history.goBack();
     };
 
     return (
@@ -46,37 +51,15 @@ function Login(props) {
                             </div> : '' }
 
                             <form>
-                                <div className="form-group row">
-                                    <label htmlFor="email"
-                                           className="col-md-4 col-form-label text-md-right">
-                                        Email address
-                                    </label>
+                                <Input name="email" label="Email address"
+                                       type="email" value={ email } required
+                                       autoComplete="email" autoFocus
+                                       onChange={ e => setEmail(e.target.value) } />
 
-                                    <div className="col-md-6">
-                                        <input id="email" type="email"
-                                               className="form-control"
-                                               name="email" value={ email }
-                                               required
-                                               autoComplete="email" autoFocus
-                                               onChange={ e => setEmail(e.target.value) }/>
-                                    </div>
-                                </div>
-
-                                <div className="form-group row">
-                                    <label htmlFor="password"
-                                           className="col-md-4 col-form-label text-md-right">
-                                        Password
-                                    </label>
-
-                                    <div className="col-md-6">
-                                        <input id="password" type="password"
-                                               className="form-control"
-                                               name="password" value={ password }
-                                               required
-                                               autoComplete="current-password"
-                                               onChange={ e => setPassword(e.target.value) } />
-                                    </div>
-                                </div>
+                                <Input name="password" label="Password"
+                                       type="password" value={ password }
+                                       required autoComplete="current-password"
+                                       onChange={ e => setPassword(e.target.value) } />
 
                                 <div className="form-group row">
                                     <div className="col-md-6 offset-md-4">
@@ -88,7 +71,7 @@ function Login(props) {
                                                    onChange={ e => setRemember(e.target.checked) } />
                                             <label className="custom-control-label"
                                                    htmlFor="remember">
-                                                Remember Me
+                                                Remember me
                                             </label>
                                         </div>
                                     </div>
@@ -96,8 +79,8 @@ function Login(props) {
 
                                 <div className="form-group row mb-0">
                                     <div className="col-md-8 offset-md-4">
-                                        <button type="submit"
-                                                className="btn btn-primary"
+                                        <a onClick={ () => back() }>Back</a>
+                                        <button className="btn btn-primary"
                                                 onClick={ doLogin }
                                                 disabled={ loginStatus === LOGIN_STATUS_IN_PROGRESS }>
                                             Login
@@ -136,4 +119,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));
