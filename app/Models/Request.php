@@ -16,33 +16,41 @@
  * this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace Relief\Providers;
+namespace Relief\Models;
 
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Gate;
+use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class AuthServiceProvider extends ServiceProvider
+class Request extends Model
 {
+    use Sluggable, SoftDeletes;
+
     /**
-     * The policy mappings for the application.
+     * The attributes that should be cast to native types.
      *
      * @var array
      */
-    protected $policies = [
-        // 'App\Model' => 'App\Policies\ModelPolicy',
+    protected $casts = [
+        'deleted_at' => 'datetime',
     ];
 
-    /**
-     * Register any authentication / authorization services.
-     *
-     * @return void
-     */
-    public function boot(): void
+    public function user()
     {
-        $this->registerPolicies();
+        return $this->belongsTo(\Relief\Models\User::class);
+    }
 
-        Gate::before(function ($user, $ability) {
-            return $user->hasRole('Super Admin') ? true : null;
-        });
+    public function category()
+    {
+        return $this->belongsTo(\Relief\Models\Category::class);
+    }
+
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
     }
 }
