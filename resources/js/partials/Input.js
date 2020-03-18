@@ -30,7 +30,7 @@ export default function Input(props) {
             <div className="col-md-6">
                 <input id={ name }
                        className={ hasError ? "form-control is-invalid" : "form-control" }
-                       name={ name } { attr } />
+                       name={ name } { ...attr } />
                 { error !== '' ? <div className="invalid-feedback">
                     { error }
                 </div> : '' }
